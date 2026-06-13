@@ -30,6 +30,11 @@ export default function PhraseCard({ phrase }) {
         <p className="text-gray-500 dark:text-gray-400 text-xs font-mono">
           {phrase.pronunciation}
         </p>
+        {phrase.tip && (
+          <p className="text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-md px-3 py-2 mt-2">
+            {phrase.tip}
+          </p>
+        )}
       </div>
 
       {/* Botón de audio en la derecha */}

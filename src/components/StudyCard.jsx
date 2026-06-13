@@ -49,6 +49,13 @@ export default function StudyCard({ phrase, showMeaning, reviewInfo, onToggleMea
         </div>
       )}
 
+      {phrase.tip && (
+        <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-200 dark:border-amber-800 rounded-lg w-full text-left">
+          <p className="text-gray-600 dark:text-gray-300 mb-1 text-sm">Truco rápido:</p>
+          <p className="text-amber-800 dark:text-amber-200 font-medium">{phrase.tip}</p>
+        </div>
+      )}
+
       {/* Botón para revelar significado */}
       {!showMeaning && (
         <button

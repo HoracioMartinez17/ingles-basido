@@ -79,33 +79,29 @@ function updateCard(card, grade) {
   return next;
 }
 
-export function useSpacedRepetition(phrases, deckId = "basics") {
+export function useSpacedRepetition(phrases, studyScope = "basics") {
   const [progress, setProgress] = useState({});
   const [hydrated, setHydrated] = useState(false);
   const [showMeaning, setShowMeaning] = useState(false);
 
   useEffect(() => {
-    setProgress(loadProgress(deckId));
+    setProgress(loadProgress(studyScope));
     setHydrated(true);
-  }, [deckId]);
+  }, [studyScope]);
 
   useEffect(() => {
     if (!hydrated) return;
-    saveProgress(deckId, progress);
-  }, [deckId, progress, hydrated]);
+    saveProgress(studyScope, progress);
+  }, [studyScope, progress, hydrated]);
 
   const cards = useMemo(() => {
     if (!phrases?.length) return [];
 
-    const activePhrases = phrases.filter(
-      (phrase) => !phrase.deck || phrase.deck === deckId,
-    );
-
-    return activePhrases.map((phrase) => ({
+    return phrases.map((phrase) => ({
       phrase,
       card: progress[phrase.id] || createDefaultCard(),
     }));
-  }, [deckId, phrases, progress]);
+  }, [phrases, progress]);
 
   const orderedCards = useMemo(() => {
     return [...cards].sort((a, b) => {
@@ -197,7 +193,7 @@ export function useSpacedRepetition(phrases, deckId = "basics") {
 
   const resetProgress = () => {
     if (typeof window === "undefined") return;
-    window.localStorage.removeItem(getStorageKey(deckId));
+    window.localStorage.removeItem(getStorageKey(studyScope));
     setProgress({});
     setCurrentId(phrases[0]?.id ?? null);
     setShowMeaning(false);

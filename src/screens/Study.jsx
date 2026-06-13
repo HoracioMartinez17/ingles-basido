@@ -7,9 +7,11 @@ import phrases from "../data/phrases";
 import studyDecks from "../data/studyDecks";
 
 const DECK_STORAGE_KEY = "english-waiter-selected-deck";
+const ADVANCED_SUBDECK_STORAGE_KEY = "english-waiter-selected-advanced-subdeck";
 
 export default function Study() {
   const [selectedDeckId, setSelectedDeckId] = useState("basics");
+  const [selectedAdvancedSubdeckId, setSelectedAdvancedSubdeckId] = useState("service");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -25,17 +27,67 @@ export default function Study() {
     window.localStorage.setItem(DECK_STORAGE_KEY, selectedDeckId);
   }, [selectedDeckId]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const storedSubdeckId = window.localStorage.getItem(ADVANCED_SUBDECK_STORAGE_KEY);
+    if (storedSubdeckId) {
+      setSelectedAdvancedSubdeckId(storedSubdeckId);
+    }
+  }, []);
+
   const activeDeck = useMemo(
     () => studyDecks.find((deck) => deck.id === selectedDeckId) || studyDecks[0],
     [selectedDeckId],
   );
 
+  useEffect(() => {
+    if (selectedDeckId !== "advanced") return;
+
+    const availableSubdecks = activeDeck?.subdecks || [];
+    if (!availableSubdecks.length) return;
+
+    const subdeckExists = availableSubdecks.some(
+      (subdeck) => subdeck.id === selectedAdvancedSubdeckId,
+    );
+
+    if (!subdeckExists) {
+      setSelectedAdvancedSubdeckId(
+        activeDeck.defaultSubdeckId || availableSubdecks[0].id,
+      );
+    }
+  }, [activeDeck, selectedDeckId, selectedAdvancedSubdeckId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (selectedDeckId !== "advanced") return;
+    window.localStorage.setItem(ADVANCED_SUBDECK_STORAGE_KEY, selectedAdvancedSubdeckId);
+  }, [selectedDeckId, selectedAdvancedSubdeckId]);
+
   const deckPhrases = useMemo(
-    () => phrases.filter((phrase) => !phrase.deck || phrase.deck === selectedDeckId),
-    [selectedDeckId],
+    () =>
+      phrases.filter((phrase) => {
+        if (selectedDeckId === "basics") {
+          return !phrase.deck;
+        }
+
+        if (selectedDeckId === "advanced") {
+          if (phrase.deck !== "advanced") return false;
+          if (selectedAdvancedSubdeckId === "general")
+            return !phrase.subdeck || phrase.subdeck === "general";
+          return phrase.subdeck === selectedAdvancedSubdeckId;
+        }
+
+        return phrase.deck === selectedDeckId;
+      }),
+    [selectedDeckId, selectedAdvancedSubdeckId],
   );
 
-  const study = useSpacedRepetition(deckPhrases, selectedDeckId);
+  const studyScope =
+    selectedDeckId === "advanced"
+      ? `advanced:${selectedAdvancedSubdeckId}`
+      : selectedDeckId;
+
+  const study = useSpacedRepetition(deckPhrases, studyScope);
 
   if (!study.studyPhrase) {
     return <div>Cargando...</div>;
@@ -89,6 +141,29 @@ export default function Study() {
             Cada mazo guarda su progreso por separado. Así luego puedes crear uno nuevo
             sin mezclarlo con el básico.
           </p>
+
+          {selectedDeckId === "advanced" && activeDeck?.subdecks?.length ? (
+            <div className="mt-4 border-t border-gray-200 dark:border-slate-700 pt-4">
+              <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-3">
+                Submazos de avanzado
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {activeDeck.subdecks.map((subdeck) => (
+                  <button
+                    key={subdeck.id}
+                    onClick={() => setSelectedAdvancedSubdeckId(subdeck.id)}
+                    className={`px-3 py-2 rounded-full text-sm font-semibold border transition-all ${
+                      selectedAdvancedSubdeckId === subdeck.id
+                        ? "bg-blue-600 text-white border-blue-600"
+                        : "bg-gray-50 dark:bg-slate-900 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-blue-300"
+                    }`}
+                  >
+                    {subdeck.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">

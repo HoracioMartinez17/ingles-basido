@@ -13,6 +13,7 @@ export default function Navigation() {
     { path: "/", icon: "🏠", label: "Inicio", label_short: "Inicio" },
     { path: "/phrases", icon: "📚", label: "Frases", label_short: "Frases" },
     { path: "/study", icon: "🎓", label: "Estudio", label_short: "Estudio" },
+    { path: "/tricks", icon: "✨", label: "Trucos", label_short: "Trucos" },
     { path: "/exam", icon: "✏️", label: "Examen", label_short: "Examen" },
     { path: "/favorites", icon: "⭐", label: "Favoritos", label_short: "Favs" },
   ];
