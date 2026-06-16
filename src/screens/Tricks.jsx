@@ -39,8 +39,8 @@ export default function Tricks() {
             ✨ Trucos de Aprendizaje Rápido
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Patrones y trucos gramaticales para aprender inglés de camarero de forma fluida y
-            natural.
+            Patrones y trucos gramaticales para aprender inglés de camarero de forma
+            fluida y natural.
           </p>
         </div>
 
@@ -77,7 +77,8 @@ export default function Tricks() {
         {filteredTricks.length > 0 ? (
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Mostrando {filteredTricks.length} truco{filteredTricks.length !== 1 ? "s" : ""}
+              Mostrando {filteredTricks.length} truco
+              {filteredTricks.length !== 1 ? "s" : ""}
             </p>
             <div className="space-y-4">
               {filteredTricks.map((trick) => (
@@ -105,9 +106,9 @@ export default function Tricks() {
         {/* Info en footer */}
         <div className="mt-12 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
           <p className="text-sm text-blue-900 dark:text-blue-200">
-            💡 <strong>Consejo:</strong> Los trucos aquí son patrones que los hablantes nativos
-            usan naturalmente. Práctica varios en contexto para que se queden en tu memoria. No
-            necesitas memorizarlos todos a la vez.
+            💡 <strong>Consejo:</strong> Los trucos aquí son patrones que los hablantes
+            nativos usan naturalmente. Práctica varios en contexto para que se queden en
+            tu memoria. No necesitas memorizarlos todos a la vez.
           </p>
         </div>
       </div>

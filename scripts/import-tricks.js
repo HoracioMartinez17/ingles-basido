@@ -2,10 +2,10 @@
 
 /**
  * SCRIPT: Import tricks from Markdown table format
- * 
+ *
  * Usage:
  *   npm run import-tricks --input tricks-material.md --output tricks-advanced.js --start-id 6
- * 
+ *
  * Markdown format expected:
  * | Título (emoji) | Categoría | Explicación | Ejemplos (EN/PRON) |
  * |---|---|---|---|
@@ -17,12 +17,8 @@ const path = require("path");
 
 // Parse command line arguments
 const args = process.argv.slice(2);
-const inputFile = args
-  .find((arg) => arg.startsWith("--input"))
-  ?.split("=")[1];
-const outputFile = args
-  .find((arg) => arg.startsWith("--output"))
-  ?.split("=")[1];
+const inputFile = args.find((arg) => arg.startsWith("--input"))?.split("=")[1];
+const outputFile = args.find((arg) => arg.startsWith("--output"))?.split("=")[1];
 const startId = parseInt(
   args.find((arg) => arg.startsWith("--start-id"))?.split("=")[1] || "1",
 );
