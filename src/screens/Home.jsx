@@ -41,6 +41,19 @@ export default function Home() {
           </Link>
 
           <Link
+            to="/conversation-course"
+            className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl hover:scale-105 transition-all border-t-4 border-purple-500 cursor-pointer"
+          >
+            <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+              🧠 Mini Curso de Conversación
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              Aprende a responder fuera del guion, unir piezas como LEGO y construir
+              frases nuevas sin bloquearte.
+            </p>
+          </Link>
+
+          <Link
             to="/exam"
             className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl hover:scale-105 transition-all border-t-4 border-orange-500 cursor-pointer"
           >
@@ -73,6 +86,10 @@ export default function Home() {
             <li>✓ Comienza en "Frases Esenciales" para conocer el vocabulario.</li>
             <li>
               ✓ Usa "Modo Estudio" para aprender con flashcards y repetición espaciada.
+            </li>
+            <li>
+              ✓ Entra al "Mini Curso de Conversación" para salir del bloqueo cuando te
+              saquen del guion.
             </li>
             <li>
               ✓ Marca las frases difíciles como "Favoritas" para enfocarte en ellas.
