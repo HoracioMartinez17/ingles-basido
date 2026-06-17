@@ -195,7 +195,7 @@ const phrases = [
   {
     id: 27,
     english: "Is he finished?",
-    spanish: "¿Ya ha terminado?",
+    spanish: "¿Ya ha terminado?", 
     pronunciation: "Is ji fínisht",
     deck: "advanced",
     subdeck: "service",
